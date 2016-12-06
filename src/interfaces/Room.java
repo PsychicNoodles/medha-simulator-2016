@@ -1,0 +1,121 @@
+package interfaces;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import items.Item;
+
+public abstract class Room {
+	protected String name;
+	protected String flavor;
+	
+	private String[] looks;
+	private int lookInd;
+	
+	protected boolean leaving;
+	
+	protected Map<String, Item> roomItems;
+	
+	public Room(String name, String flavor, String[] looks) {
+		this.name = name;
+		this.flavor = flavor;
+		this.looks = looks;
+		lookInd = 0;
+		leaving = false;
+		roomItems = new HashMap<>();
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getFlavor() {
+		return flavor;
+	}
+	
+	public String lookResponse() {
+		if(lookInd >= looks.length) {
+			lookInd = 0;
+		}
+		return looks[lookInd++];
+	}
+			
+	public String pickUpResponse(Item itm, List<Item> inventory) {
+		if(itm == null) {
+			return "That is not a valid item!";
+		} else if(inventory.contains(itm)) {
+			return "You are already carring " + itm.getName() + "!";
+		} else {
+			inventory.add(itm);
+			return itm.getPickUp();
+		}
+	}
+	
+	public String useResponse(Item itm, List<Item> inventory) {
+		if(itm == null) {
+			return "That is not a valid item!";
+		} else if(inventory.contains(itm)) {
+			return itm.getUse();
+		} else {
+			return "You are not carrying a " + itm.getName() + "!";
+		}
+	}
+	
+	public String interactResponse(Item itm) {
+		if(itm == null) {
+			return "That is not a valid item!";
+		} else {
+			return itm.getInteract();
+		}
+	}
+	
+	public String attackResponse(Item itm) {
+		if(itm == null) {
+			return "That is not a valid item!";
+		} else {
+			return itm.getAttack();
+		}
+	}
+	
+	public String leaveResponse() {
+		if(complete()) {
+			leaving = true;
+			return "You're ready to move on.";
+		} else {
+			return "You feel like you're still forgetting something.";
+		}
+	}
+	
+	public String processCommand(String cmd, List<Item> inventory) {
+		leaving = false;
+		cmd = cmd.toLowerCase();
+		if(cmd.equals("look")) {
+			return lookResponse();
+		} else if(cmd.startsWith("pick up")) {
+			return pickUpResponse(roomItems.get(cmd.substring(8)), inventory);
+		} else if(cmd.startsWith("use")) {
+			return useResponse(roomItems.get(cmd.substring(4)), inventory);
+		} else if(cmd.startsWith("interact")) {
+			System.out.println(cmd.substring(9));
+			return interactResponse(roomItems.get(cmd.substring(9)));
+		} else if(cmd.startsWith("attack")) {
+			return attackResponse(roomItems.get(cmd.substring(7)));
+		} else if(cmd.equals("leave")) {
+			return leaveResponse();
+		} else if(cmd.startsWith("help")) {
+			return help();
+		} else {
+			return "You don't know how to " + cmd + "!";
+		}
+	}
+	
+	protected String help() {
+		return "You can look, pick up [item], use [inventory item], interact [item], and attack [item]";
+	}
+	
+	public boolean shouldLeave() {
+		return complete() && leaving;
+	}
+	
+	public abstract boolean complete();
+}
