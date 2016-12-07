@@ -8,14 +8,35 @@ public class Item {
 	protected String attack;
 	protected boolean pickUpable;
 	
-	public Item(String name, String pickUp, String use, String interact, String attack,
-				boolean pickUpable) {
+	private Item(String name, String pickUp, String use, String interact, String attack, boolean pickUpable) {
 		this.name = name;
 		this.pickUp = pickUp;
 		this.use = use;
 		this.interact = interact;
 		this.attack = attack;
 		this.pickUpable = pickUpable;
+	}
+	
+	/**
+	 * An Item that can be picked up
+	 * @param name
+	 * @param pickUp
+	 * @param use
+	 * @param interact
+	 * @param attack
+	 */
+	public Item(String name, String pickUp, String use, String interact, String attack) {
+		this(name, pickUp, use, interact, attack, true);
+	}
+	
+	/**
+	 * An Item that cannot be picked up
+	 * @param name
+	 * @param interact
+	 * @param attack
+	 */
+	public Item(String name, String interact, String attack) {
+		this(name, null, null, interact, attack, false);
 	}
 
 	public String getName() {
