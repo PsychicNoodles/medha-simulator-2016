@@ -47,10 +47,14 @@ public abstract class Room {
 		if(itm == null) {
 			return "That is not a valid item!";
 		} else if(inventory.contains(itm)) {
-			return "You are already carring " + itm.getName() + "!";
+			return "You are already carrying " + itm.getName() + "!";
 		} else {
-			inventory.add(itm);
-			return itm.getPickUp();
+			if(itm.getPickUpable()) {
+				inventory.add(itm);
+				return itm.getPickUp();
+			} else {
+				return "You cannot carry a " + itm.getName() + "!";
+			}
 		}
 	}
 	
