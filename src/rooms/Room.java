@@ -105,7 +105,6 @@ public abstract class Room {
 		} else if(cmd.startsWith("use")) {
 			return useResponse(roomItems.get(cmd.substring(4)), inventory);
 		} else if(cmd.startsWith("interact")) {
-			System.out.println(cmd.substring(9));
 			return interactResponse(roomItems.get(cmd.substring(9)));
 		} else if(cmd.startsWith("attack")) {
 			return attackResponse(roomItems.get(cmd.substring(7)));
