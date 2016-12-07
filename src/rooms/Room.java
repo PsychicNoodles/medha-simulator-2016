@@ -1,4 +1,4 @@
-package interfaces;
+package rooms;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,13 +16,16 @@ public abstract class Room {
 	
 	protected Map<String, Item> roomItems;
 	
-	public Room(String name, String flavor, String[] looks) {
+	public Room(String name, String flavor, String[] looks, Item[] items) {
 		this.name = name;
 		this.flavor = flavor;
 		this.looks = looks;
 		lookInd = 0;
 		leaving = false;
 		roomItems = new HashMap<>();
+		for(Item itm : items) {
+			roomItems.put(itm.getName().toLowerCase(), itm);
+		}
 	}
 	
 	public String getName() {
