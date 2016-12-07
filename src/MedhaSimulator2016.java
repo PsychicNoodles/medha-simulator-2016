@@ -2,9 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import interfaces.Room;
 import items.Item;
 import rooms.Bedroom;
+import rooms.Room;
 
 public class MedhaSimulator2016 {
 	public static void main(String[] args) {
@@ -17,11 +17,16 @@ public class MedhaSimulator2016 {
 		List<Item> inventory = new ArrayList<>();
 		Scanner in = new Scanner(System.in);
 		int round = 1;
+		boolean justEntered;
 		
 		for(Room r : rooms) {
+			justEntered = true;
 			while(!r.shouldLeave()) {
 				System.out.println(fmtRound(round) + " =====");
-				System.out.println(r.getFlavor());
+				if(justEntered) {
+					System.out.println(r.getFlavor());
+					System.out.println("Welcome to == " + r.getName() + " ==");
+				}
 
 				System.out.print("> ");
 				String cmd = in.nextLine();
@@ -29,6 +34,7 @@ public class MedhaSimulator2016 {
 
 				System.out.println(r.processCommand(cmd, inventory));
 				round++;
+				justEntered = false;
 			}
 		}
 		
