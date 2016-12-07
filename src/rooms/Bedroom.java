@@ -54,7 +54,9 @@ public class Bedroom extends Room {
 	
 	@Override
 	public String pickUpResponse(Item itm, List<Item> inventory) {
-		if(itm.getName().equals("PCard")) {
+		if(itm == null) {
+			return INVALID_ITEM;
+		} else if(itm.getName().equals("PCard")) {
 			hasPcard = true;
 		} else if(itm.getName().equals("clothes")) {
 			isDressed = true;
