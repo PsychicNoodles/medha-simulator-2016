@@ -16,6 +16,8 @@ public abstract class Room {
 	
 	protected Map<String, Item> roomItems;
 	
+	protected static final String INVALID_ITEM = "That is not a valid item!";
+	
 	public Room(String name, String flavor, String[] looks, Item[] items) {
 		this.name = name;
 		this.flavor = flavor;
@@ -45,7 +47,7 @@ public abstract class Room {
 			
 	public String pickUpResponse(Item itm, List<Item> inventory) {
 		if(itm == null) {
-			return "That is not a valid item!";
+			return INVALID_ITEM;
 		} else if(inventory.contains(itm)) {
 			return "You are already carrying " + itm.getName() + "!";
 		} else {
@@ -60,7 +62,7 @@ public abstract class Room {
 	
 	public String useResponse(Item itm, List<Item> inventory) {
 		if(itm == null) {
-			return "That is not a valid item!";
+			return INVALID_ITEM;
 		} else if(inventory.contains(itm)) {
 			return itm.getUse();
 		} else {
@@ -70,7 +72,7 @@ public abstract class Room {
 	
 	public String interactResponse(Item itm) {
 		if(itm == null) {
-			return "That is not a valid item!";
+			return INVALID_ITEM;
 		} else {
 			return itm.getInteract();
 		}
@@ -78,7 +80,7 @@ public abstract class Room {
 	
 	public String attackResponse(Item itm) {
 		if(itm == null) {
-			return "That is not a valid item!";
+			return INVALID_ITEM;
 		} else {
 			return itm.getAttack();
 		}
