@@ -70,11 +70,11 @@ public abstract class Room {
 		}
 	}
 	
-	public String interactResponse(Item itm) {
+	public String interactResponse(Item itm, List<Item> inventory) {
 		if(itm == null) {
 			return INVALID_ITEM;
 		} else {
-			return itm.getInteract();
+			return itm.getInteract(inventory);
 		}
 	}
 	
@@ -86,18 +86,25 @@ public abstract class Room {
 		}
 	}
 	
+	protected String canLeaveString() {
+		return "You're ready to move on.";
+	}
+	
+	protected String canNotLeaveString() {
+		return "You feel like you're still forgetting something.";
+	}
+	
 	public String leaveResponse() {
 		if(complete()) {
 			leaving = true;
-			return "You're ready to move on.";
+			return canLeaveString();
 		} else {
-			return "You feel like you're still forgetting something.";
+			return canNotLeaveString();
 		}
 	}
 	
 	public String processCommand(String cmd, List<Item> inventory) {
 		leaving = false;
-		cmd = cmd.toLowerCase();
 		if(cmd.equals("look")) {
 			return lookResponse();
 		} else if(cmd.startsWith("pick up")) {
@@ -105,7 +112,7 @@ public abstract class Room {
 		} else if(cmd.startsWith("use")) {
 			return useResponse(roomItems.get(cmd.substring(4)), inventory);
 		} else if(cmd.startsWith("interact")) {
-			return interactResponse(roomItems.get(cmd.substring(9)));
+			return interactResponse(roomItems.get(cmd.substring(9)), inventory);
 		} else if(cmd.startsWith("attack")) {
 			return attackResponse(roomItems.get(cmd.substring(7)));
 		} else if(cmd.equals("leave")) {

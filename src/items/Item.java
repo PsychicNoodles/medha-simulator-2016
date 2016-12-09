@@ -1,5 +1,7 @@
 package items;
 
+import java.util.List;
+
 public class Item {
 	protected String name; 
 	protected String pickUp;
@@ -51,7 +53,7 @@ public class Item {
 		return use;
 	}
 
-	public String getInteract() {
+	public String getInteract(List<Item> inventory) {
 		return interact;
 	}
 

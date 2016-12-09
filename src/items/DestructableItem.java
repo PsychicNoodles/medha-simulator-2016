@@ -1,5 +1,7 @@
 package items;
 
+import java.util.List;
+
 public class DestructableItem extends Item {
 
 	private String attackAlt;
@@ -22,6 +24,33 @@ public class DestructableItem extends Item {
 		} else {
 			isAttacked = true;
 			return attack;
+		}
+	}
+	
+	@Override
+	public String getPickUp() {
+		if(isAttacked) {
+			return attackAlt;
+		} else {
+			return super.getPickUp();
+		}
+	}
+	
+	@Override
+	public String getUse() {
+		if(isAttacked) {
+			return attackAlt;
+		} else {
+			return super.getUse();
+		}
+	}
+	
+	@Override
+	public String getInteract(List<Item> inventory) {
+		if(isAttacked) {
+			return attackAlt;
+		} else {
+			return super.getInteract(inventory);
 		}
 	}
 }

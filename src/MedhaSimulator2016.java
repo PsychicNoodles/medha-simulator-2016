@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import items.Item;
 import rooms.Bedroom;
+import rooms.Classroom;
+import rooms.EastCampus;
+import rooms.NoyceEntrance;
 import rooms.Room;
 
 public class MedhaSimulator2016 {
@@ -13,7 +16,7 @@ public class MedhaSimulator2016 {
 		System.out.println("Your goal is to get to 207 on time.");
 		System.out.println();
 		
-		Room[] rooms = new Room[]{ new Bedroom() };
+		Room[] rooms = new Room[]{ new Bedroom(), new EastCampus(), new NoyceEntrance(), new Classroom() };
 		List<Item> inventory = new ArrayList<>();
 		Scanner in = new Scanner(System.in);
 		int round = 1;
@@ -32,11 +35,13 @@ public class MedhaSimulator2016 {
 				String cmd = in.nextLine();
 				System.out.println();
 
-				System.out.println(r.processCommand(cmd, inventory));
+				System.out.println(r.processCommand(cmd.toLowerCase(), inventory));
 				round++;
 				justEntered = false;
 			}
 		}
+		
+		System.out.println("The end!");
 		
 		in.close();
 	}
